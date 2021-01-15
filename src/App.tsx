@@ -1,7 +1,7 @@
+import stationData from './assets/data/stations.json';
+
 function App() {
-  const x = {
-    1: 1,
-  };
+  console.log(stationData);
   return <div>hello</div>;
 }
 
