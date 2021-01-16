@@ -18,7 +18,7 @@ export default function pathFinder(
 // using BFS
 const MAX_NUM_OF_STOPS_FROM_SHORTEST_PATH = 3;
 const MAX_NUM_OF_PATHS = 3;
-function findPaths(
+export function findPaths(
   graphStations: GraphConnectionStations,
   src: StationName,
   dest: StationName
@@ -89,7 +89,7 @@ function findPaths(
       ..
     }
 */
-function buildGraph(lineToStations: LineToStations) {
+export function buildGraph(lineToStations: LineToStations) {
   const adjacencyList: GraphConnectionStations = {};
 
   Object.entries(lineToStations).forEach(([line, stations]) => {
@@ -140,7 +140,7 @@ function buildGraph(lineToStations: LineToStations) {
       ..
     }
 */
-function formatStationDataToByLine(stationData: StationData) {
+export function formatStationDataToByLine(stationData: StationData) {
   const lineToStations: LineToStations = {};
   Object.entries(stationData).forEach(([station, lines]) => {
     Object.entries(lines).forEach(([line, order]) => {
