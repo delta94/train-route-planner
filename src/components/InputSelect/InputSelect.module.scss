@@ -1,0 +1,49 @@
+:local {
+  .container {
+    position: relative;
+    width: 100%;
+  }
+  
+  .input {
+    width: 100%;
+    border: 1px solid gray;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+  }
+
+  .listContainer {
+    position: absolute;
+    z-index: 1;
+    margin-top: 5px;
+    padding: 0;
+    background-color: white;
+    border-radius: 5px;
+    width: 100%;
+    max-height: 300px;
+    box-shadow: 0px 1px 7px -3px grey;
+    overflow: scroll;
+  }
+
+  .listItem {
+    list-style: none;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(224, 235, 253);
+      color: black;
+    }
+  }
+
+  .listItemSelected {
+    background-color: rgb(66, 164, 255);
+    color: white;
+
+    &:hover {
+      background-color: rgb(66, 164, 255);
+      color: white;
+    }
+  }
+}
