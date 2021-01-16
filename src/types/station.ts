@@ -1,4 +1,5 @@
-export type Station = string;
+export type StationName = string;
+export type Station = { station: StationName; line: Line };
 export type Path = Array<Station>;
 export type Line = string;
 /* 
@@ -31,7 +32,7 @@ export type StationData = {
 */
 export type LineToStations = {
   [line: string]: {
-    [stationNumber: number]: Station;
+    [stationNumber: number]: StationName;
   };
 };
 
@@ -40,7 +41,7 @@ export type StationToLines = {
 };
 
 export type GraphConnectionStations = {
-  [stationName: string]: Set<Station>;
+  [stationName: string]: Array<Station>;
 };
 
 export type StationAndTheLines = {

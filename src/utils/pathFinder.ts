@@ -2,14 +2,14 @@ import {
   StationData,
   LineToStations,
   GraphConnectionStations,
-  Station,
+  StationName,
   Path,
 } from '../types/station';
 
 export default function pathFinder(
   stationData: StationData,
-  src: Station,
-  dest: Station
+  src: StationName,
+  dest: StationName
 ) {
   const graphStations = buildGraph(formatStationDataToByLine(stationData));
   return findPaths(graphStations, src, dest);
@@ -20,15 +20,18 @@ const MAX_NUM_OF_STOPS_FROM_SHORTEST_PATH = 3;
 const MAX_NUM_OF_PATHS = 3;
 function findPaths(
   graphStations: GraphConnectionStations,
-  src: Station,
-  dest: Station
+  src: StationName,
+  dest: StationName
 ) {
   let shortestPath = -1,
     numOfPathFound = 0;
   // a queue to maintain queue of station to explore and all of its travlled stations
   const queue: Array<Path> = [];
   let currentPath: Path = [];
-  currentPath.push(src);
+  currentPath.push({
+    station: src,
+    line: '', // empty first because we don't know yet which line is taken in this station
+  });
   queue.push(currentPath);
   while (queue.length > 0) {
     currentPath = queue.shift() as Path;
@@ -40,9 +43,10 @@ function findPaths(
     ) {
       return;
     }
-    const lastStationInThePath = currentPath[currentPath.length - 1];
 
-    if (lastStationInThePath === dest) {
+    // check if we have arrived / found one working path
+    const lastStationInThePath = currentPath[currentPath.length - 1];
+    if (lastStationInThePath.station === dest) {
       console.log('Results => ', currentPath);
       // first path found is the shortest path because of the nature of BFS
       if (shortestPath === -1) {
@@ -55,14 +59,20 @@ function findPaths(
       }
     }
 
-    // eslint-disable-next-line no-loop-func
-    graphStations[lastStationInThePath].forEach((nextConnectedStation) => {
-      if (!currentPath.includes(nextConnectedStation)) {
-        const newPath = currentPath.slice();
-        newPath.push(nextConnectedStation);
-        queue.push(newPath);
+    // add vertex to the queue according to BFS
+    graphStations[lastStationInThePath.station].forEach(
+      // eslint-disable-next-line no-loop-func
+      (nextConnectedStation) => {
+        // avoid loop by checking if station already exists in the path
+        if (
+          !currentPath.find((s) => s.station === nextConnectedStation.station)
+        ) {
+          const newPath = currentPath.slice();
+          newPath.push({ ...nextConnectedStation });
+          queue.push(newPath);
+        }
       }
-    });
+    );
   }
 }
 
@@ -70,27 +80,38 @@ function findPaths(
   Build graph in adjacency list
   Output: 
     {
-      "Potong Pasir": ["Woodleigh", "Boon Keng"],
+      "Potong Pasir": [
+        { station: "Woodleigh", line: 'ES' },
+        { station: "Boon Keng", line: 'EW }
+      ],
       ..
     }
 */
 function buildGraph(lineToStations: LineToStations) {
   const adjacencyList: GraphConnectionStations = {};
 
-  Object.entries(lineToStations).forEach(([_, stations]) => {
+  Object.entries(lineToStations).forEach(([line, stations]) => {
     let previousStation: string | undefined;
     Object.values(stations).forEach((station) => {
       if (previousStation) {
         // connect station -> previousStation
         if (adjacencyList[station] === undefined) {
-          adjacencyList[station] = new Set();
+          adjacencyList[station] = [];
         }
-        adjacencyList[station].add(previousStation);
+        if (
+          !adjacencyList[station].find((s) => s.station === previousStation)
+        ) {
+          adjacencyList[station].push({ station: previousStation, line });
+        }
         // connect station <- previousStation
         if (adjacencyList[previousStation] === undefined) {
-          adjacencyList[previousStation] = new Set();
+          adjacencyList[previousStation] = [];
         }
-        adjacencyList[previousStation].add(station);
+        if (
+          !adjacencyList[previousStation].find((s) => s.station === station)
+        ) {
+          adjacencyList[previousStation].push({ station, line });
+        }
       }
       previousStation = station;
     });

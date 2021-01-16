@@ -2,6 +2,7 @@ import * as React from 'react';
 
 // Utils;
 import { fetchGET } from '../../utils/fetch';
+import pathFinder from '../../utils/pathFinder';
 
 // Types
 import { StationData } from '../../types/station';
@@ -22,6 +23,12 @@ function Home() {
 
     getData();
   }, []);
+
+  React.useEffect(() => {
+    if (stationData) {
+      pathFinder(stationData, 'Potong Pasir', 'HarbourFront');
+    }
+  }, [stationData]);
 
   return <div>hello</div>;
 }
