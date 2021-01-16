@@ -1,0 +1,29 @@
+:local {
+  .container {
+    margin-top: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .labelIcons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 12px;
+  }
+
+  .icon {
+    margin: 4px 0;
+  }
+
+  .form {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .inputFrom {
+    margin-bottom: 15px;
+  }
+}
