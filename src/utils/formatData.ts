@@ -1,4 +1,5 @@
-import { StationData, StationAndTheLines } from '../types/station';
+import { StationData, StationAndTheLines, Path, Line } from '../types/station';
+import { Instruction, InstructionDetail } from '../types/instruction';
 
 /*
   To get station and its lines to be shown in the select input box
@@ -22,4 +23,51 @@ export function getStationAndTheLines(stationData: StationData) {
     });
   });
   return stationAndTheLines;
+}
+
+export function formatResultsAsInstruction(paths: Path[]) {
+  const instructions: Instruction[] = [];
+  paths.forEach((path) => {
+    let previousStation = path[0].station;
+    let numOfStopsInTotal = 0,
+      currentNumOfStops = 0;
+    const linesTaken = new Set<Line>();
+    const instructionDetails: InstructionDetail[] = [];
+    for (let i = 0; i < path.length - 1; i++) {
+      path[i].line && linesTaken.add(path[i].line);
+      // if we don't change line, update number of stops
+      if (i === 0 || path[i].line === path[i + 1].line) {
+        numOfStopsInTotal++;
+        currentNumOfStops++;
+      } else {
+        // on changing Line
+        // wrap the steps as an instruction detail
+        instructionDetails.push({
+          initialStation: previousStation,
+          finalStation: path[i].station,
+          numOfStops: currentNumOfStops,
+          lineTaken: path[i].line,
+        });
+
+        // update value after changing line
+        previousStation = path[i].station;
+        currentNumOfStops = 1;
+        numOfStopsInTotal++;
+      }
+    }
+    // at the very the end, wrap steps as an instruction detail
+    instructionDetails.push({
+      initialStation: previousStation,
+      finalStation: path[path.length - 1].station,
+      numOfStops: currentNumOfStops,
+      lineTaken: path[path.length - 1].line,
+    });
+    // add complete instruction for this path
+    instructions.push({
+      linesTaken: Array.from<Line>(linesTaken),
+      numOfStopsInTotal,
+      detail: [...instructionDetails],
+    });
+  });
+  return instructions;
 }

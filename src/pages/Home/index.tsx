@@ -3,6 +3,7 @@ import * as React from 'react';
 // Utils;
 import { fetchGET } from '../../utils/fetch';
 import pathFinder from '../../utils/pathFinder';
+import { formatResultsAsInstruction } from '../../utils/formatData';
 
 // Types
 import { StationData } from '../../types/station';
@@ -26,7 +27,9 @@ function Home() {
 
   React.useEffect(() => {
     if (stationData) {
-      pathFinder(stationData, 'Potong Pasir', 'HarbourFront');
+      const paths = pathFinder(stationData, 'Potong Pasir', 'Kent Ridge');
+      console.log(paths);
+      console.log(formatResultsAsInstruction(paths));
     }
   }, [stationData]);
 

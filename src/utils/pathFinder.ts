@@ -23,6 +23,7 @@ function findPaths(
   src: StationName,
   dest: StationName
 ) {
+  const results = [];
   let shortestPath = -1,
     numOfPathFound = 0;
   // a queue to maintain queue of station to explore and all of its travlled stations
@@ -41,13 +42,13 @@ function findPaths(
       shortestPath > 0 &&
       currentPath.length - shortestPath > MAX_NUM_OF_STOPS_FROM_SHORTEST_PATH
     ) {
-      return;
+      return results;
     }
 
     // check if we have arrived / found one working path
     const lastStationInThePath = currentPath[currentPath.length - 1];
     if (lastStationInThePath.station === dest) {
-      console.log('Results => ', currentPath);
+      results.push(currentPath);
       // first path found is the shortest path because of the nature of BFS
       if (shortestPath === -1) {
         shortestPath = currentPath.length;
@@ -55,7 +56,7 @@ function findPaths(
       // limit number of paths found
       numOfPathFound++;
       if (numOfPathFound === MAX_NUM_OF_PATHS) {
-        return;
+        return results;
       }
     }
 
@@ -74,6 +75,7 @@ function findPaths(
       }
     );
   }
+  return results;
 }
 
 /*
