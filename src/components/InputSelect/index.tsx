@@ -2,6 +2,7 @@ import * as React from 'react';
 
 // Utils
 import cx from 'classnames';
+import { isSubstring } from '../../utils/string';
 
 import styles from './InputSelect.module.scss';
 
@@ -43,7 +44,7 @@ function InputSelect({ className, options, onSelect, placeholder }: Props) {
       {showSelection && (
         <ul className={styles.listContainer}>
           {options
-            .filter((option) => option.value.match(new RegExp(value, 'i')))
+            .filter((option) => isSubstring(option.value, value))
             .map((option) => (
               <li
                 key={option.value}
