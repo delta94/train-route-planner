@@ -1,8 +1,10 @@
-import stationData from './assets/data/stations.json';
+import * as React from 'react';
+
+// Pages
+import Home from './pages/Home';
 
 function App() {
-  console.log(stationData);
-  return <div>hello</div>;
+  return <Home />;
 }
 
 export default App;
