@@ -4,6 +4,7 @@ import * as React from 'react';
 import InputSelect from '../../components/InputSelect';
 import LineBadge from '../../components/LineBadge';
 import Button from '../../components/Button';
+import FormController from '../../components/FormController';
 
 // Utils;
 import { fetchGET } from '../../utils/fetch';
@@ -26,8 +27,6 @@ import styles from './Home.module.scss';
 function Home() {
   const [isError, setIsError] = React.useState<boolean>(false);
   const [stationData, setStationData] = React.useState<StationData>();
-  const [source, setSource] = React.useState<StationName>('');
-  const [destination, setDestination] = React.useState<StationName>('');
 
   React.useEffect(() => {
     const getData = async () => {
@@ -49,62 +48,79 @@ function Home() {
 
   return (
     <div className={styles.container}>
-      <form
+      <FormController
         className={styles.form}
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log(`From ${source} to ${destination}`);
+        fields={{ source: { value: '' }, destination: { value: '' } }}
+        onSubmit={(fields) => {
+          console.log(
+            `From ${fields['source'].value} to ${fields['destination'].value}`
+          );
           // const paths = pathFinder(stationData!, source, destination);
           // console.log(formatResultsAsInstruction(paths));
         }}
       >
-        <div className={styles.labelIcons}>
-          <Target className={styles.icon} />
-          <Dot className={styles.icon} />
-          <Dot className={styles.icon} />
-          <MapPin className={styles.icon} />
-        </div>
-        <InputSelect
-          className={styles.inputFrom}
-          placeholder="Choose starting point"
-          options={Object.entries(listOfStations).map(([station, lines]) => ({
-            value: station,
-            label: (
-              <>
-                <span>{station}</span>
-                {lines.map((line) => (
-                  <LineBadge
-                    key={line}
-                    className={styles.lineBadge}
-                    line={line}
-                  />
-                ))}
-              </>
-            ),
-          }))}
-          onSelect={(value) => setSource(value)}
-        />
-        <InputSelect
-          placeholder="Choose destination"
-          options={Object.entries(listOfStations).map(([station, lines]) => ({
-            value: station,
-            label: (
-              <>
-                <span>{station}</span>
-                {lines.map((line) => (
-                  <LineBadge
-                    key={line}
-                    className={styles.lineBadge}
-                    line={line}
-                  />
-                ))}
-              </>
-            ),
-          }))}
-          onSelect={(value) => setDestination(value)}
-        />
-        <Button className={styles.submitButton}>Submit</Button>
-      </form>
+        {({ fields, setFields }) => (
+          <>
+            <div className={styles.labelIcons}>
+              <Target className={styles.icon} />
+              <Dot className={styles.icon} />
+              <Dot className={styles.icon} />
+              <Dot className={styles.icon} />
+              <MapPin className={styles.icon} />
+            </div>
+            <InputSelect
+              className={styles.inputFrom}
+              placeholder="Choose starting point"
+              options={Object.entries(listOfStations).map(
+                ([station, lines]) => ({
+                  value: station,
+                  label: (
+                    <>
+                      <span>{station}</span>
+                      {lines.map((line) => (
+                        <LineBadge
+                          key={line}
+                          className={styles.lineBadge}
+                          line={line}
+                        />
+                      ))}
+                    </>
+                  ),
+                })
+              )}
+              onSelect={(value) =>
+                setFields((fields) => ({ ...fields, source: { value } }))
+              }
+              error={fields['source'].error}
+            />
+            <InputSelect
+              placeholder="Choose destination"
+              options={Object.entries(listOfStations).map(
+                ([station, lines]) => ({
+                  value: station,
+                  label: (
+                    <>
+                      <span>{station}</span>
+                      {lines.map((line) => (
+                        <LineBadge
+                          key={line}
+                          className={styles.lineBadge}
+                          line={line}
+                        />
+                      ))}
+                    </>
+                  ),
+                })
+              )}
+              onSelect={(value) =>
+                setFields((fields) => ({ ...fields, destination: { value } }))
+              }
+              error={fields['destination'].error}
+            />
+            <Button className={styles.submitButton}>Submit</Button>
+          </>
+        )}
+      </FormController>
     </div>
   );
 }

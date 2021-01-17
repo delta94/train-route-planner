@@ -13,8 +13,15 @@ type Props = {
   placeholder?: string;
   options: Options;
   onSelect: (value: string) => void;
+  error?: string;
 };
-function InputSelect({ className, options, onSelect, placeholder }: Props) {
+function InputSelect({
+  className,
+  options,
+  onSelect,
+  placeholder,
+  error,
+}: Props) {
   const [showSelection, setShowSelection] = React.useState(false);
   const [value, setValue] = React.useState<string>('');
   const previousValue = React.useRef<string>('');
@@ -41,7 +48,7 @@ function InputSelect({ className, options, onSelect, placeholder }: Props) {
           setShowSelection(false);
           if (value && !options.find((opt) => opt.value === value)) {
             setValue(previousValue.current);
-          } else if (value) {
+          } else {
             onSelect(value);
           }
         }}
@@ -49,6 +56,7 @@ function InputSelect({ className, options, onSelect, placeholder }: Props) {
           setValue(e.target.value);
         }}
       />
+      {error && <div className={styles.error}>{error}</div>}
       {showSelection && (
         <ul className={styles.listContainer}>
           {options
