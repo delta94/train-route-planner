@@ -41,14 +41,6 @@ function Home() {
     getData();
   }, []);
 
-  React.useEffect(() => {
-    if (stationData) {
-      const paths = pathFinder(stationData, 'Potong Pasir', 'Kent Ridge');
-      console.log(paths);
-      console.log(formatResultsAsInstruction(paths));
-    }
-  }, [stationData]);
-
   const listOfStations = React.useMemo(
     () => getStationAndTheLines(stationData ?? {}),
     [stationData]
@@ -56,13 +48,21 @@ function Home() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.labelIcons}>
-        <Target className={styles.icon} />
-        <Dot className={styles.icon} />
-        <Dot className={styles.icon} />
-        <MapPin className={styles.icon} />
-      </div>
-      <div className={styles.form}>
+      <form
+        className={styles.form}
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log(`From ${source} to ${destination}`);
+          const paths = pathFinder(stationData!, source, destination);
+          console.log(formatResultsAsInstruction(paths));
+        }}
+      >
+        <div className={styles.labelIcons}>
+          <Target className={styles.icon} />
+          <Dot className={styles.icon} />
+          <Dot className={styles.icon} />
+          <MapPin className={styles.icon} />
+        </div>
         <InputSelect
           className={styles.inputFrom}
           placeholder="Choose starting point"
@@ -102,7 +102,8 @@ function Home() {
           }))}
           onSelect={(value) => setDestination(value)}
         />
-      </div>
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 }

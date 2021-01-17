@@ -5,22 +5,26 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
-  }
-
-  .labelIcons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 12px;
-  }
-
-  .icon {
-    margin: 4px 0;
+    padding-left: 35px;
   }
 
   .form {
     width: 100%;
     max-width: 400px;
+    position: relative;
+  }
+
+  .labelIcons {
+    position: absolute;
+    left: -30px;
+    top: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .icon {
+    margin: 4px 0;
   }
 
   .inputFrom {
