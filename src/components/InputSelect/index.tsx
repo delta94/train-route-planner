@@ -2,7 +2,7 @@ import * as React from 'react';
 
 // Utils
 import cx from 'classnames';
-import { isSubstring } from '../../utils/string';
+import { isSubstring } from 'utils/string';
 
 import styles from './InputSelect.module.scss';
 

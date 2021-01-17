@@ -1,30 +1,30 @@
 import * as React from 'react';
 
 // Components
-import InputSelect from '../../components/InputSelect';
-import LineBadge from '../../components/LineBadge';
-import Button from '../../components/Button';
-import FormController from '../../components/FormController';
+import InputSelect from 'components/InputSelect';
+import LineBadge from 'components/LineBadge';
+import Button from 'components/Button';
+import FormController from 'components/FormController';
 import InstructionComponent from './components/Instruction';
 
 // Utils;
-import { fetchGET } from '../../utils/fetch';
-import pathFinder from '../../utils/pathFinder';
+import { fetchGET } from 'utils/fetch';
+import pathFinder from 'utils/pathFinder';
 import {
   formatResultsAsInstruction,
   getStationAndTheLines,
-} from '../../utils/formatData';
+} from 'utils/formatData';
 
 // Assets
-import { ReactComponent as Target } from '../../assets/icons/target.svg';
-import { ReactComponent as Dot } from '../../assets/icons/dot.svg';
-import { ReactComponent as MapPin } from '../../assets/icons/map-pin.svg';
+import { ReactComponent as Target } from 'assets/icons/target.svg';
+import { ReactComponent as Dot } from 'assets/icons/dot.svg';
+import { ReactComponent as MapPin } from 'assets/icons/map-pin.svg';
 
 // Types
-import { StationData } from '../../types/station';
+import { StationData } from 'types/station';
 
 import styles from './Home.module.scss';
-import { Instruction } from '../../types/instruction';
+import { Instruction } from 'types/instruction';
 
 function Home() {
   const [isError, setIsError] = React.useState<boolean>(false);

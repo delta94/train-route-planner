@@ -1,6 +1,6 @@
 // Utils
 import cx from 'classnames';
-import { LINE_TO_COLOR } from '../../constants/lineColor';
+import { LINE_TO_COLOR } from 'constants/lineColor';
 
 import styles from './LineBadge.module.scss';
 
