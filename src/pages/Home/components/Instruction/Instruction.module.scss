@@ -1,0 +1,32 @@
+:local {
+  .instruction {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    padding: 15px 20px;
+    background-color: rgb(235, 235, 235);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .lines, .line {
+    display: flex;
+    align-items: center;
+  }
+
+  .arrowRightIcon {
+    width: 20px;
+    margin-right: 5px;
+  }
+
+  .numOfStops {
+    margin: 10px 0 0;
+    font-size: 0.9rem;
+  }
+
+  .lineBadge2 {
+    margin-right: 5px;
+    padding: 2px 4px;
+    font-size: 0.9rem;
+  }
+}

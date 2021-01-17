@@ -11,4 +11,5 @@ export type Instruction = {
   linesTaken: Line[];
   numOfStopsInTotal: number;
   detail: InstructionDetail[];
+  showDetail: boolean;
 };

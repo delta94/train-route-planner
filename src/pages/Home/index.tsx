@@ -5,6 +5,7 @@ import InputSelect from '../../components/InputSelect';
 import LineBadge from '../../components/LineBadge';
 import Button from '../../components/Button';
 import FormController from '../../components/FormController';
+import InstructionComponent from './components/Instruction';
 
 // Utils;
 import { fetchGET } from '../../utils/fetch';
@@ -20,13 +21,15 @@ import { ReactComponent as Dot } from '../../assets/icons/dot.svg';
 import { ReactComponent as MapPin } from '../../assets/icons/map-pin.svg';
 
 // Types
-import { StationData, StationName } from '../../types/station';
+import { StationData } from '../../types/station';
 
 import styles from './Home.module.scss';
+import { Instruction } from '../../types/instruction';
 
 function Home() {
   const [isError, setIsError] = React.useState<boolean>(false);
   const [stationData, setStationData] = React.useState<StationData>();
+  const [instructions, setInstructions] = React.useState<Instruction[]>();
 
   React.useEffect(() => {
     const getData = async () => {
@@ -51,12 +54,14 @@ function Home() {
       <FormController
         className={styles.form}
         fields={{ source: { value: '' }, destination: { value: '' } }}
-        onSubmit={(fields) => {
-          console.log(
-            `From ${fields['source'].value} to ${fields['destination'].value}`
-          );
-          // const paths = pathFinder(stationData!, source, destination);
-          // console.log(formatResultsAsInstruction(paths));
+        onSubmit={(fields, isValid) => {
+          const source = fields['source'].value;
+          const destination = fields['destination'].value;
+          console.log(`From ${source} to ${destination}`);
+          if (isValid) {
+            const paths = pathFinder(stationData!, source, destination);
+            setInstructions(formatResultsAsInstruction(paths));
+          }
         }}
       >
         {({ fields, setFields }) => (
@@ -121,6 +126,20 @@ function Home() {
           </>
         )}
       </FormController>
+      <div className={styles.instructionContainer}>
+        {instructions?.map((instruction, idx) => (
+          <InstructionComponent
+            key={idx}
+            instruction={instruction}
+            onClick={() => {
+              const newInstructions = [...instructions];
+              newInstructions[idx].showDetail = !newInstructions[idx]
+                .showDetail;
+              setInstructions([...newInstructions]);
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 }

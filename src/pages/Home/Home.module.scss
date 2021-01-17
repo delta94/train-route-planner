@@ -1,17 +1,17 @@
 :local {
   .container {
-    margin-top: 20vh;
+    margin: 20vh auto 0;
+    max-width: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     padding: 10px;
     padding-left: 35px;
   }
 
   .form {
     width: 100%;
-    max-width: 400px;
-    
     position: relative;
     display: flex;
     flex-direction: column;
@@ -43,5 +43,10 @@
   .submitButton {
     display: inline-block;
     margin: 15px auto;
+  }
+
+  .instructionContainer {
+    width: 100%;
+    margin-left: -25px;
   }
 }

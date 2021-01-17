@@ -67,7 +67,12 @@ export function formatResultsAsInstruction(paths: Path[]) {
       linesTaken: Array.from<Line>(linesTaken),
       numOfStopsInTotal,
       detail: [...instructionDetails],
+      showDetail: false,
     });
   });
+
+  if (instructions.length > 0) {
+    instructions[0].showDetail = true;
+  }
   return instructions;
 }
