@@ -6,11 +6,15 @@
   
   .input {
     width: 100%;
-    border: 1px solid gray;
+    border: 1px solid #d7d9db;
     padding: 10px;
     font-size: 1rem;
     border-radius: 5px;
     background: transparent;
+
+    &Error {
+      border-color: red;
+    }
   }
   
   .optionSelected {

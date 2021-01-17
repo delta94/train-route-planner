@@ -37,7 +37,7 @@ function InputSelect({
         <div className={styles.optionSelected}>{optionSelected.label}</div>
       )}
       <input
-        className={styles.input}
+        className={cx(styles.input, error && styles.inputError)}
         value={value}
         placeholder={placeholder}
         onFocus={() => {

@@ -32,6 +32,8 @@
   .submitButton {
     display: inline-block;
     margin: 15px auto;
+    position: relative;
+    left: -15px;
   }
 
   .instructionContainer {
