@@ -3,6 +3,7 @@ import * as React from 'react';
 // Components
 import InputSelect from '../../components/InputSelect';
 import LineBadge from '../../components/LineBadge';
+import Button from '../../components/Button';
 
 // Utils;
 import { fetchGET } from '../../utils/fetch';
@@ -102,7 +103,7 @@ function Home() {
           }))}
           onSelect={(value) => setDestination(value)}
         />
-        <button type="submit">Submit</button>
+        <Button className={styles.submitButton}>Submit</Button>
       </form>
     </div>
   );
