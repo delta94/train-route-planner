@@ -4,7 +4,7 @@ type Field = { value: string; error?: string };
 
 type Fields = { [fieldName: string]: Field };
 
-type Props = {
+export type FormControllerProps = {
   className?: string;
   fields: Fields;
   onSubmit: (fields: Fields, isValid: boolean) => void;
@@ -14,7 +14,7 @@ type Props = {
   }) => JSX.Element;
 };
 
-const FormController: React.FC<Props> = ({
+const FormController: React.FC<FormControllerProps> = ({
   fields: initialFields,
   className,
   onSubmit,

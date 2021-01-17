@@ -34,8 +34,8 @@ function InstructionComponent({ instruction, onClick }: Props) {
       {showDetail && (
         <div>
           {detail.map(
-            ({ initialStation, finalStation, numOfStops, lineTaken }) => (
-              <div>
+            ({ initialStation, finalStation, numOfStops, lineTaken }, idx) => (
+              <div key={idx}>
                 <div>{initialStation}</div>
                 <div>{finalStation}</div>
                 <div>{numOfStops}</div>
