@@ -25,10 +25,20 @@ type Props = {
 };
 
 function FormInput({ stationData, onSubmit }: Props) {
-  const listOfStations = React.useMemo(
-    () => getStationAndTheLines(stationData ?? {}),
-    [stationData]
-  );
+  const listOfStationsToSelect = React.useMemo(() => {
+    const listOfStations = getStationAndTheLines(stationData ?? {});
+    return Object.entries(listOfStations).map(([station, lines]) => ({
+      value: station,
+      label: (
+        <>
+          <span>{station}</span>
+          {lines.map((line) => (
+            <LineBadge key={line} className={styles.lineBadge} line={line} />
+          ))}
+        </>
+      ),
+    }));
+  }, [stationData]);
 
   return (
     <FormController
@@ -48,21 +58,7 @@ function FormInput({ stationData, onSubmit }: Props) {
           <InputSelect
             className={styles.inputFrom}
             placeholder="Choose starting point"
-            options={Object.entries(listOfStations).map(([station, lines]) => ({
-              value: station,
-              label: (
-                <>
-                  <span>{station}</span>
-                  {lines.map((line) => (
-                    <LineBadge
-                      key={line}
-                      className={styles.lineBadge}
-                      line={line}
-                    />
-                  ))}
-                </>
-              ),
-            }))}
+            options={listOfStationsToSelect}
             onSelect={(value) =>
               setFields((fields) => ({ ...fields, source: { value } }))
             }
@@ -70,21 +66,7 @@ function FormInput({ stationData, onSubmit }: Props) {
           />
           <InputSelect
             placeholder="Choose destination"
-            options={Object.entries(listOfStations).map(([station, lines]) => ({
-              value: station,
-              label: (
-                <>
-                  <span>{station}</span>
-                  {lines.map((line) => (
-                    <LineBadge
-                      key={line}
-                      className={styles.lineBadge}
-                      line={line}
-                    />
-                  ))}
-                </>
-              ),
-            }))}
+            options={listOfStationsToSelect}
             onSelect={(value) =>
               setFields((fields) => ({ ...fields, destination: { value } }))
             }
