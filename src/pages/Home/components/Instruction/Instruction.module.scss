@@ -32,9 +32,72 @@
     font-size: 0.9rem;
   }
 
-  .lineBadge2 {
+  .lineBadge, .changeLineBadge {
     margin-right: 5px;
     padding: 2px 4px;
     font-size: 0.9rem;
+  }
+
+  .instructionDetail {
+    padding-left: 66px;
+  }
+
+  .changeLine {
+    font-size: 0.9rem;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      height: 80px;
+      left: -39px;
+      top: -30px;
+      z-index: -1;
+      border: 1px solid black;
+      border-style: dotted;
+    }
+  }
+
+  .changeLineBadge {
+    margin-left: 5px;
+  }
+  
+  .detailStep {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .stepNumOfStops {
+    font-size: 0.9rem;
+    position: relative;
+  }
+
+  .connectorLine {
+    position: absolute;
+    height: 80px;
+    width: 4px;
+    left: -40px;
+    top: 26px;
+    z-index: -1;
+  }
+
+  .stationName {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 20px 0;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: -44px;
+      top: 5px;
+      width: 10px;
+      height: 10px;
+      border: 1px solid black;
+      border-radius: 50%;
+      background-color: white;
+    }
   }
 }
