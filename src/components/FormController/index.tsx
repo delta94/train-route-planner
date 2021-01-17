@@ -7,7 +7,7 @@ type Fields = { [fieldName: string]: Field };
 type Props = {
   className?: string;
   fields: Fields;
-  onSubmit: (fields: Fields) => void;
+  onSubmit: (fields: Fields, isValid: boolean) => void;
   children: (args: {
     fields: Fields;
     setFields: React.Dispatch<React.SetStateAction<Fields>>;
@@ -27,6 +27,8 @@ const FormController: React.FC<Props> = ({
       className={className}
       onSubmit={(e) => {
         e.preventDefault();
+
+        let isValid = true;
         Object.entries(fields).forEach(([fieldName, fieldData]) => {
           if (!fieldData.value) {
             setFields((field) => ({
@@ -36,9 +38,10 @@ const FormController: React.FC<Props> = ({
                 error: 'Please input the empty field',
               },
             }));
+            isValid = false;
           }
         });
-        onSubmit(fields);
+        onSubmit(fields, isValid);
       }}
     >
       {children({ fields, setFields })}
