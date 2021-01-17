@@ -6,7 +6,7 @@ import { isSubstring } from '../../utils/string';
 
 import styles from './InputSelect.module.scss';
 
-type Options = Array<{ value: string; label: string }>;
+type Options = Array<{ value: string; label: React.ReactNode }>;
 
 type Props = {
   className?: string;
@@ -19,8 +19,16 @@ function InputSelect({ className, options, onSelect, placeholder }: Props) {
   const [value, setValue] = React.useState<string>('');
   const previousValue = React.useRef<string>('');
 
+  const optionSelected = React.useMemo(
+    () => options.find((opt) => opt.value === value),
+    [value, options]
+  );
+
   return (
     <div className={cx(styles.container, className)}>
+      {optionSelected && (
+        <div className={styles.optionSelected}>{optionSelected.label}</div>
+      )}
       <input
         className={styles.input}
         value={value}
@@ -53,7 +61,7 @@ function InputSelect({ className, options, onSelect, placeholder }: Props) {
                   option.value === value && styles.listItemSelected
                 )}
                 onMouseDown={() => {
-                  setValue(option.label);
+                  setValue(option.value);
                   onSelect(option.value);
                 }}
               >

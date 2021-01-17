@@ -2,6 +2,7 @@ import * as React from 'react';
 
 // Components
 import InputSelect from '../../components/InputSelect';
+import LineBadge from '../../components/LineBadge';
 
 // Utils;
 import { fetchGET } from '../../utils/fetch';
@@ -65,17 +66,39 @@ function Home() {
         <InputSelect
           className={styles.inputFrom}
           placeholder="Choose starting point"
-          options={Object.entries(listOfStations).map(([station]) => ({
+          options={Object.entries(listOfStations).map(([station, lines]) => ({
             value: station,
-            label: station,
+            label: (
+              <>
+                <span>{station}</span>
+                {lines.map((line) => (
+                  <LineBadge
+                    key={line}
+                    className={styles.lineBadge}
+                    line={line}
+                  />
+                ))}
+              </>
+            ),
           }))}
           onSelect={(value) => setSource(value)}
         />
         <InputSelect
           placeholder="Choose destination"
-          options={Object.entries(listOfStations).map(([station]) => ({
+          options={Object.entries(listOfStations).map(([station, lines]) => ({
             value: station,
-            label: station,
+            label: (
+              <>
+                <span>{station}</span>
+                {lines.map((line) => (
+                  <LineBadge
+                    key={line}
+                    className={styles.lineBadge}
+                    line={line}
+                  />
+                ))}
+              </>
+            ),
           }))}
           onSelect={(value) => setDestination(value)}
         />
