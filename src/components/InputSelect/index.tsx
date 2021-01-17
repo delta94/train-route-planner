@@ -56,10 +56,7 @@ function InputSelect({ className, options, onSelect, placeholder }: Props) {
             .map((option) => (
               <li
                 key={option.value}
-                className={cx(
-                  styles.listItem,
-                  option.value === value && styles.listItemSelected
-                )}
+                className={styles.listItem}
                 onMouseDown={() => {
                   setValue(option.value);
                   onSelect(option.value);

@@ -53,8 +53,8 @@ function Home() {
         onSubmit={(e) => {
           e.preventDefault();
           console.log(`From ${source} to ${destination}`);
-          const paths = pathFinder(stationData!, source, destination);
-          console.log(formatResultsAsInstruction(paths));
+          // const paths = pathFinder(stationData!, source, destination);
+          // console.log(formatResultsAsInstruction(paths));
         }}
       >
         <div className={styles.labelIcons}>
