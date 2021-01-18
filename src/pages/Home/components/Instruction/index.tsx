@@ -24,7 +24,7 @@ function InstructionComponent({ instruction, onClick }: Props) {
 
   return (
     <>
-      <div className={styles.instruction} onClick={onClick}>
+      <div className={styles.instructionHeader} onClick={onClick}>
         <div className={styles.lines}>
           {linesTaken.map((line, idx) => (
             <span key={line} className={styles.line}>
