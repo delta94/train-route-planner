@@ -32,6 +32,7 @@ export function findPaths(
   currentPath.push({
     station: src,
     line: '', // empty first because we don't know yet which line is taken in this station
+    endOfLine: '',
   });
   queue.push(currentPath);
   while (queue.length > 0) {
@@ -80,11 +81,20 @@ export function findPaths(
 
 /*
   Build graph in adjacency list
+  Input:
+    {
+      "NS": {
+        1: "Jurong East",
+        2: "Admiralty",
+        ...
+      },
+      ..
+    }
   Output: 
     {
       "Potong Pasir": [
-        { station: "Woodleigh", line: 'ES' },
-        { station: "Boon Keng", line: 'EW }
+        { station: "Woodleigh", line: 'ES', endLine: 'Jurong East' },
+        { station: "Boon Keng", line: 'EW', endLine: 'Punggol' }
       ],
       ..
     }
@@ -93,8 +103,11 @@ export function buildGraph(lineToStations: LineToStations) {
   const adjacencyList: GraphConnectionStations = {};
 
   Object.entries(lineToStations).forEach(([line, stations]) => {
+    const arrayOfStations = Object.values(stations);
+    const firstStationOnTheLine = arrayOfStations[0];
+    const lastStationOnTheLine = arrayOfStations[arrayOfStations.length - 1];
     let previousStation: string | undefined;
-    Object.values(stations).forEach((station) => {
+    arrayOfStations.forEach((station) => {
       if (previousStation) {
         // connect station -> previousStation
         if (adjacencyList[station] === undefined) {
@@ -103,7 +116,11 @@ export function buildGraph(lineToStations: LineToStations) {
         if (
           !adjacencyList[station].find((s) => s.station === previousStation)
         ) {
-          adjacencyList[station].push({ station: previousStation, line });
+          adjacencyList[station].push({
+            station: previousStation,
+            line,
+            endOfLine: firstStationOnTheLine,
+          });
         }
         // connect station <- previousStation
         if (adjacencyList[previousStation] === undefined) {
@@ -112,7 +129,11 @@ export function buildGraph(lineToStations: LineToStations) {
         if (
           !adjacencyList[previousStation].find((s) => s.station === station)
         ) {
-          adjacencyList[previousStation].push({ station, line });
+          adjacencyList[previousStation].push({
+            station,
+            line,
+            endOfLine: lastStationOnTheLine,
+          });
         }
       }
       previousStation = station;

@@ -4,11 +4,12 @@ export type InstructionDetail = {
   initialStation: StationName;
   finalStation: StationName;
   numOfStops: number;
-  lineTaken: Line;
+  line: Line;
+  endOfLine: Line; // to tell the direction because MRT runs on both directions
 };
 
 export type Instruction = {
-  linesTaken: Line[];
+  lines: Line[];
   numOfStopsInTotal: number;
   detail: InstructionDetail[];
   showDetail: boolean;

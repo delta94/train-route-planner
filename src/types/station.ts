@@ -1,5 +1,9 @@
 export type StationName = string;
-export type Station = { station: StationName; line: Line };
+export type Station = {
+  station: StationName;
+  line: Line;
+  endOfLine: StationName; // to tell the direction because MRT line runs on both direction
+};
 export type Path = Array<Station>;
 export type Line = string;
 /* 

@@ -46,7 +46,8 @@ export function formatResultsAsInstruction(paths: Path[]) {
           initialStation: previousStation,
           finalStation: path[i].station,
           numOfStops: currentNumOfStops,
-          lineTaken: path[i].line,
+          line: path[i].line,
+          endOfLine: path[i].endOfLine,
         });
 
         // update value after changing line
@@ -60,17 +61,19 @@ export function formatResultsAsInstruction(paths: Path[]) {
       initialStation: previousStation,
       finalStation: path[path.length - 1].station,
       numOfStops: currentNumOfStops,
-      lineTaken: path[path.length - 1].line,
+      line: path[path.length - 1].line,
+      endOfLine: path[path.length - 1].endOfLine,
     });
     // add complete instruction for this path
     instructions.push({
-      linesTaken: Array.from<Line>(linesTaken),
+      lines: Array.from<Line>(linesTaken),
       numOfStopsInTotal,
       detail: [...instructionDetails],
       showDetail: false,
     });
   });
 
+  // expand first instruction card
   if (instructions.length > 0) {
     instructions[0].showDetail = true;
   }

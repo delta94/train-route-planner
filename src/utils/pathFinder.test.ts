@@ -30,8 +30,8 @@ describe('buildGraph', () => {
       },
     };
     const output = {
-      Fake: [{ station: 'Aljunied', line: 'EW' }],
-      Aljunied: [{ station: 'Fake', line: 'EW' }],
+      Fake: [{ station: 'Aljunied', line: 'EW', endOfLine: 'Aljunied' }],
+      Aljunied: [{ station: 'Fake', line: 'EW', endOfLine: 'Fake' }],
     };
 
     expect(buildGraph(input)).toEqual(output);
@@ -41,20 +41,20 @@ describe('buildGraph', () => {
 describe('findPaths', () => {
   it('should return correct output', () => {
     const inputGraph = {
-      Fake: [{ station: 'Aljunied', line: 'EW' }],
+      Fake: [{ station: 'Aljunied', line: 'EW', endOfLine: 'Aljunied' }],
       Aljunied: [
-        { station: 'Fake', line: 'EW' },
-        { station: 'Potong Pasir', line: 'NE' },
+        { station: 'Fake', line: 'EW', endOfLine: 'Fake' },
+        { station: 'Potong Pasir', line: 'NE', endOfLine: 'Punggol' },
       ],
-      'Potong Pasir': [{ station: 'Aljunied', line: 'NE' }],
+      'Potong Pasir': [{ station: 'Aljunied', line: 'NE', endOfLine: 'Fake' }],
     };
     const inputSource = 'Fake';
     const inputDestination = 'Potong Pasir';
     const output = [
       [
-        { station: 'Fake', line: '' },
-        { station: 'Aljunied', line: 'EW' },
-        { station: 'Potong Pasir', line: 'NE' },
+        { station: 'Fake', line: '', endOfLine: '' },
+        { station: 'Aljunied', line: 'EW', endOfLine: 'Aljunied' },
+        { station: 'Potong Pasir', line: 'NE', endOfLine: 'Punggol' },
       ],
     ];
 
