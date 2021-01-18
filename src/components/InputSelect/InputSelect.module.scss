@@ -13,6 +13,7 @@
     font-size: $font-size-base;
     border-radius: 5px;
     background: transparent;
+    -webkit-appearance: none;
 
     &Error {
       border-color: red;
