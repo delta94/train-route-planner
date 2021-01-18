@@ -1,3 +1,5 @@
+@import 'styles/font.scss';
+
 :local {
   .container {
     position: relative;
@@ -8,7 +10,7 @@
     width: 100%;
     border: 1px solid #d7d9db;
     padding: 10px;
-    font-size: 1rem;
+    font-size: $font-size-base;
     border-radius: 5px;
     background: transparent;
 
@@ -41,7 +43,7 @@
   .listItem {
     list-style: none;
     padding: 10px;
-    font-size: 1rem;
+    font-size: $font-size-base;
     cursor: pointer;
 
     &:hover {
@@ -52,7 +54,7 @@
 
   .error {
     color: red;
-    font-size: 0.8rem;
+    font-size: $font-size-tiny;
     margin: 3px 0 0 5px;
   }
 }
