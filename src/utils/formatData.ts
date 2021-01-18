@@ -31,10 +31,9 @@ export function formatResultsAsInstruction(paths: Path[]) {
     let previousStation = path[0].station;
     let numOfStopsInTotal = 0,
       currentNumOfStops = 0;
-    const linesTaken = new Set<Line>();
+    const linesTaken: Line[] = [];
     const instructionDetails: InstructionDetail[] = [];
     for (let i = 0; i < path.length - 1; i++) {
-      path[i].line && linesTaken.add(path[i].line);
       // if we don't change line, update number of stops
       if (i === 0 || path[i].line === path[i + 1].line) {
         numOfStopsInTotal++;
@@ -54,6 +53,7 @@ export function formatResultsAsInstruction(paths: Path[]) {
         previousStation = path[i].station;
         currentNumOfStops = 1;
         numOfStopsInTotal++;
+        linesTaken.push(path[i].line);
       }
     }
     // at the very the end, wrap steps as an instruction detail
@@ -64,9 +64,10 @@ export function formatResultsAsInstruction(paths: Path[]) {
       line: path[path.length - 1].line,
       endOfLine: path[path.length - 1].endOfLine,
     });
+    linesTaken.push(path[path.length - 1].line);
     // add complete instruction for this path
     instructions.push({
-      lines: Array.from<Line>(linesTaken),
+      lines: linesTaken,
       numOfStopsInTotal,
       detail: [...instructionDetails],
       showDetail: false,

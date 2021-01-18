@@ -27,7 +27,7 @@ function InstructionComponent({ instruction, onClick }: Props) {
       <div className={styles.instructionHeader} onClick={onClick}>
         <div className={styles.lines}>
           {lines.map((line, idx) => (
-            <span key={line} className={styles.line}>
+            <span key={idx} className={styles.line}>
               {idx > 0 && <ArrowRight className={styles.arrowRightIcon} />}
               <LineBadge className={styles.lineBadge} line={line} />
             </span>
