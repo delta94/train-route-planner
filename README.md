@@ -8,6 +8,13 @@ Try it yourself ! https://help-find-mrt.netlify.app/
 
 Built with create-react-app https://github.com/facebook/create-react-app/
 
+### Build the app
+```
+git clone git@github.com:gejimayu/train-route-planner.git
+cd train-route-planner
+yarn
+```
+
 #### `yarn start`
 
 Runs the app in the development mode.
