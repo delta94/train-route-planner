@@ -19,8 +19,15 @@ type Props = {
   onClick: () => void;
 };
 
+const DETAIL_MAX_HEIGHT = 170; //px
+
 function InstructionComponent({ instruction, onClick }: Props) {
   const { lines, numOfStopsInTotal, detail, showDetail } = instruction;
+  const [expandDetail, setExpandDetail] = React.useState<boolean>(showDetail);
+
+  React.useLayoutEffect(() => {
+    setExpandDetail(showDetail);
+  }, [showDetail]);
 
   return (
     <>
@@ -35,43 +42,48 @@ function InstructionComponent({ instruction, onClick }: Props) {
         </div>
         <p className={styles.numOfStops}>{numOfStopsInTotal} stops</p>
       </div>
-      {showDetail && (
-        <div className={styles.instructionDetail}>
-          {detail.map(
-            (
-              { initialStation, finalStation, numOfStops, line, endOfLine },
-              idx
-            ) => (
-              <React.Fragment key={idx}>
-                {idx > 0 && (
-                  <div className={styles.changeLine}>
-                    Change line
-                    <LineBadge
-                      className={styles.changeLineBadge}
-                      line={detail[idx - 1].line}
-                    />
-                    to
-                    <LineBadge className={styles.changeLineBadge} line={line} />
-                  </div>
-                )}
-                <div className={styles.detailStep}>
-                  <div
-                    className={styles.connectorLine}
-                    style={{ backgroundColor: LINE_TO_COLOR[line] }}
+      <div
+        className={styles.instructionDetail}
+        style={{
+          maxHeight: expandDetail
+            ? `${detail.length * DETAIL_MAX_HEIGHT}px`
+            : '0',
+        }}
+      >
+        {detail.map(
+          (
+            { initialStation, finalStation, numOfStops, line, endOfLine },
+            idx
+          ) => (
+            <React.Fragment key={idx}>
+              {idx > 0 && (
+                <div className={styles.changeLine}>
+                  Change line
+                  <LineBadge
+                    className={styles.changeLineBadge}
+                    line={detail[idx - 1].line}
                   />
-                  <div className={styles.stationName}>{initialStation}</div>
-                  <div className={styles.stepNumOfStops}>
-                    <LineBadge className={styles.lineBadge} line={line} />
-                    {endOfLine}
-                    <span> ({numOfStops} stops)</span>
-                  </div>
-                  <div className={styles.stationName}>{finalStation}</div>
+                  to
+                  <LineBadge className={styles.changeLineBadge} line={line} />
                 </div>
-              </React.Fragment>
-            )
-          )}
-        </div>
-      )}
+              )}
+              <div className={styles.detailStep}>
+                <div
+                  className={styles.connectorLine}
+                  style={{ backgroundColor: LINE_TO_COLOR[line] }}
+                />
+                <div className={styles.stationName}>{initialStation}</div>
+                <div className={styles.stepNumOfStops}>
+                  <LineBadge className={styles.lineBadge} line={line} />
+                  {endOfLine}
+                  <span> ({numOfStops} stops)</span>
+                </div>
+                <div className={styles.stationName}>{finalStation}</div>
+              </div>
+            </React.Fragment>
+          )
+        )}
+      </div>
     </>
   );
 }
