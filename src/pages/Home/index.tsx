@@ -19,16 +19,13 @@ import styles from './Home.module.scss';
 import { Instruction } from 'types/instruction';
 
 function Home() {
-  const [isError, setIsError] = React.useState<boolean>(false);
   const [stationData, setStationData] = React.useState<StationData>();
   const [instructions, setInstructions] = React.useState<Instruction[]>();
 
   React.useEffect(() => {
     const getData = async () => {
       const response = await fetchGET<StationData>('/stations.json');
-      if (response.error) {
-        setIsError(true);
-      } else {
+      if (!response.error) {
         setStationData(response as StationData);
       }
     };
