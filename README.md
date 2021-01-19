@@ -2,7 +2,7 @@
 
 Try it yourself ! https://help-find-mrt.netlify.app/
 
-![Screen-Recording-2021-01-19-at-1 (2)](https://user-images.githubusercontent.com/25560419/104946010-6d905580-59f4-11eb-9279-ef7948228059.gif)
+![ezgif-3-91a87797aa65](https://user-images.githubusercontent.com/25560419/104986055-3b5f1200-5a4d-11eb-9102-e55bd5f47e64.gif)
 
 ## How to run
 
